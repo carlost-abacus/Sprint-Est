@@ -1,11 +1,7 @@
 {
     "python.defaultInterpreterPath": "C:\\Users\\tsaic\\miniconda3\\envs\\crawlerEnv\\python.exe",
     "files.exclude": {
-        "**/__pycache__": true, // Add this line to hide __pycache__ folders
-        "**/.mypy_cache": true, // Often useful for MyPy cache
-        "**/.pytest_cache": true, // Often useful for pytest cache
-        "**/.venv": true,       // If you place your virtual env inside the project
-        "**/venv": true,       // Common virtual env name
-        "**/*.pyc": true        // Hide individual compiled bytecode files
+        "**/__pycache__": true,
+        "**/*.pyc": true
     }
 }

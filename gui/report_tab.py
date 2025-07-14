@@ -1,9 +1,9 @@
-from tkinter import LabelFrame, Label, Button, Frame, Scrollbar
-from tkinter import RIGHT, Y, BOTH, VERTICAL, LEFT
+from tkinter import LabelFrame, Label, Button, Frame, Scrollbar, Toplevel, Text
+from tkinter import RIGHT, Y, BOTH, VERTICAL, LEFT, WORD, END, DISABLED
 from tkinter.ttk import Combobox, Treeview
-from tkinter import messagebox
 from utils.export_util import export_to_excel, export_to_csv    
 from services.timesheet_processor import apply_filters
+from tkinter import messagebox
 
 
 def setup_report_ui(app):
@@ -86,4 +86,43 @@ def setup_report_ui(app):
 
     Button(button_frame, text="Export to Excel", command=export_to_excel).pack(side=LEFT, padx=5)
     Button(button_frame, text="Export to CSV", command=export_to_csv).pack(side=LEFT, padx=5)
-    # Button(button_frame, text="Show Error Report", command=app.show_error_report).pack(side=LEFT, padx=5)
+    Button(button_frame, text="Show Error Report", command=lambda: show_error_report(app)).pack(side=LEFT, padx=5)
+
+
+def show_error_report(app):
+    if not app.time_sheet_errors:
+        messagebox.showinfo("Error Report", "No time sheet errors found from the last data fetch.")
+        return
+
+    error_report_window = Toplevel(app.master)
+    error_report_window.title("Time Sheet Error Report")
+    error_report_window.geometry("700x500")
+    error_report_window.transient(app.master) # Make it appear on top of main window
+    error_report_window.grab_set() # Make it modal
+
+    text_area = Text(error_report_window, wrap=WORD, font=("Arial", 10))
+    text_area.pack(expand=True, fill=BOTH, padx=10, pady=10)
+
+    report_content = "Time Sheet Processing Errors:\n\n"
+    if not app.time_sheet_errors:
+        report_content += "No errors to report."
+    else:
+        for owner, errors in app.time_sheet_errors.items():
+            report_content += f"--- Owner/File: {owner if owner else 'Unknown'} ---\n"
+            for error in errors:
+                report_content += f"- {error}\n"
+            report_content += "\n"
+    text_area.insert(END, report_content)
+    text_area.config(state=DISABLED)
+
+    def copy_to_clipboard():
+        error_report_window.clipboard_clear()
+        error_report_window.clipboard_append(report_content)
+        messagebox.showinfo("Copied", "Error report copied to clipboard.")
+
+    copy_btn = Button(error_report_window, text="Copy to Clipboard", command=copy_to_clipboard)
+    copy_btn.pack(pady=5)
+
+    # Allow user to close
+    close_btn = Button(error_report_window, text="Close", command=error_report_window.destroy)
+    close_btn.pack(pady=5)

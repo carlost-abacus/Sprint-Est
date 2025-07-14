@@ -2,6 +2,8 @@ import pandas as pd
 import os
 from tkinter import filedialog, END
 from datetime import datetime, timedelta
+from tkinter import messagebox
+
 
 def load_timesheet_files(app):
     """Opens file dialog for timesheet files and updates the label."""
@@ -34,27 +36,20 @@ def _process_timesheet_files(file_paths):
     for file_path in file_paths:
         ext = os.path.splitext(file_path)[1].lower()
         file_basename = os.path.basename(file_path)
-        current_owner = "Unknown"
+        filename_without_ext = os.path.splitext(file_basename)[0]
+        current_owner = filename_without_ext[25:]
+        if ext in ['.xlsx', '.xls']:
+            all_sheets = pd.read_excel(file_path, sheet_name=None)
+            dfs = [df for df in all_sheets.values()]
+        else:
+            if current_owner not in time_sheet_errors:
+                time_sheet_errors[current_owner] = []
+            time_sheet_errors[current_owner].append(f"Skipping unsupported file type: {file_basename}")
+            continue
 
         try:
-            if ext == '.csv':
-                dfs = [pd.read_csv(file_path)]
-            elif ext in ['.xlsx', '.xls']:
-                all_sheets = pd.read_excel(file_path, sheet_name=None)
-                dfs = [df for df in all_sheets.values()]
-            else:
-                if current_owner not in time_sheet_errors:
-                    time_sheet_errors[current_owner] = []
-                time_sheet_errors[current_owner].append(f"Skipping unsupported file type: {file_basename}")
-                continue
 
             for df_index, df in enumerate(dfs):
-                if 'Name' in df.columns and not df['Name'].empty:
-                    current_owner = str(df['Name'].iloc[0])
-                elif 'Employee' in df.columns and not df['Employee'].empty:
-                    current_owner = str(df['Employee'].iloc[0])
-                else:
-                    current_owner = file_basename
 
                 if current_owner not in time_sheet_errors:
                     time_sheet_errors[current_owner] = []
@@ -67,18 +62,17 @@ def _process_timesheet_files(file_paths):
                     task_str_raw = row.get('Task')
                     hrs_raw = row.get('Hrs')
 
-                    if pd.isna(hrs_raw) or str(hrs_raw).strip() == '':
-                        time_sheet_errors[current_owner].append(f"Row {row_num + 2} in '{file_basename}' (Sheet {df_index+1}): 'Hrs' is empty for Task '{task_str_raw}'.")
-                        continue
-
                     try:
                         if isinstance(task_str_raw, str) and task_str_raw.startswith('#'):
                             task_str = task_str_raw[1:]
                         else:
                             task_str = str(task_str_raw)
-
+                        if pd.isna(hrs_raw) or str(hrs_raw).strip() == '':
+                            if(str(task_str_raw).strip() == ''):
+                                time_sheet_errors[current_owner].append(f"Row {row_num + 2} in '{file_basename}' (Sheet {df_index+1}): 'Hrs' is empty for Task '{task_str}'.")
+                            continue
                         if not task_str.strip().isnumeric(): # Use strip() to handle whitespace
-                            time_sheet_errors[current_owner].append(f"Row {row_num + 2} in '{file_basename}' (Sheet {df_index+1}): Invalid 'Task' format '{task_str_raw}'. Must be a number (e.g., 12345 or #12345).")
+                            time_sheet_errors[current_owner].append(f"Row {row_num + 2} in '{file_basename}' (Sheet {df_index+1}): Invalid Task format '{task_str_raw}'. Must be a number")
                             continue
                         task_num = int(task_str.strip())
 
@@ -105,6 +99,7 @@ def _process_timesheet_files(file_paths):
             if current_owner not in time_sheet_errors:
                 time_sheet_errors[current_owner] = []
             time_sheet_errors[current_owner].append(f"General error processing file: {file_basename} - {e}")
+        print(time_sheet_errors)
     return task_hours, time_sheet_errors
 
 def _populate_report_ui(app):
@@ -194,3 +189,4 @@ def apply_filters(app):
             continue
 
         app.tree.insert('', END, values=row_values)
+

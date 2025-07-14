@@ -5,7 +5,7 @@ import threading
 from gui.loading_window import show_loading_window, hide_loading_window
 from services.timesheet_processor import _process_timesheet_files, _populate_report_ui
 
-def fetch_all_data(app):
+def fetch_data(app):
     """
     Coordinates fetching GitLab issues and processing timesheets in a thread,
     then updates the UI.
@@ -41,35 +41,32 @@ def fetch_all_data(app):
     show_loading_window(app)
 
     # Run data fetching and processing in a separate thread
-    threading.Thread(target=fetch_and_process_data_thread,
+    threading.Thread(target=fetch_gitlab_issues,
                         args=(app, gitlab_url, private_token, project_id,
                             app.start_date_str_gitlab.get(), app.end_date_str_gitlab.get())).start()
 
-def fetch_and_process_data_thread(app, gitlab_url, private_token, project_id, start_date_str, end_date_str):
+def process_data(app):
     """Worker thread to fetch GitLab data and process timesheets."""
     try:
-        # Fetch GitLab issues
-        fetched_issues = fetch_gitlab_issues(app, gitlab_url, private_token, project_id, start_date_str, end_date_str)
-
         # Process timesheets (assuming files were already selected and app.timesheet_file_paths is set)
         if hasattr(app, 'timesheet_file_paths') and app.timesheet_file_paths:
             processed_hours, errors = _process_timesheet_files(app.timesheet_file_paths)
         else:
             processed_hours, errors = {}, {}
 
-        # Update instance variables
-        app.issues_data_raw = fetched_issues
         app.task_hours_processed = processed_hours
         app.time_sheet_errors = errors
 
         # Update UI on the main thread
-        app.master.after(0, lambda: hide_loading_window(app))
         app.master.after(0, lambda: _populate_report_ui(app)) # Populate filters and table
         app.master.after(0, lambda: app.notebook.select(app.report_frame)) # Switch to report tab
 
     except Exception as e:
         app.master.after(0, lambda: hide_loading_window(app))
-        app.master.after(0, lambda: messagebox.showerror("Processing Error", f"An error occurred during data fetching or processing: {e}"))
+        app.master.after(0, lambda e=e: messagebox.showerror(
+            "Processing Error",
+            f"An error occurred during data fetching or processing: {e}"
+        ))
         print(f"Error in fetch_and_process_data_thread: {e}")
 
 def fetch_gitlab_issues(app, gitlab_url, private_token, project_id, start_date_str, end_date_str):
@@ -121,6 +118,9 @@ def fetch_gitlab_issues(app, gitlab_url, private_token, project_id, start_date_s
                 })
             break # Exit loop as all=True fetches all
     except gitlab.exceptions.GitlabError as e:
-        app.master.after(0, lambda: messagebox.showerror("GitLab Error", f"Error fetching issues from GitLab.\nError Details: {e}"))
+        app.master.after(0, lambda e=e: messagebox.showerror(
+            "GitLab Error", f"Error fetching issues from GitLab.\nError Details: {e}"
+        ))
         return []
-    return issues_data
+    app.master.after(0, lambda: hide_loading_window(app))
+    app.issues_data_raw = issues_data
