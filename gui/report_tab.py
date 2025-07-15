@@ -33,12 +33,23 @@ def setup_report_ui(app):
 
     # Filter by Actual Hours Action
     Label(filter_frame, text="Actual Hours:").grid(row=1, column=2, padx=5, pady=2, sticky="w")
-    app.action_filter_combo = Combobox(filter_frame, values=["All", "Has Actual Hours", "Missing Actual Hours"], state="readonly", width=25)
-    app.action_filter_combo.set("All")
-    app.action_filter_combo.grid(row=1, column=3, padx=5, pady=2, sticky="ew")
+    app.has_actHour_filter_combo = Combobox(filter_frame, values=["All", "Has Actual Hours", "Missing Actual Hours"], state="readonly", width=25)
+    app.has_actHour_filter_combo.set("All")
+    app.has_actHour_filter_combo.grid(row=1, column=3, padx=5, pady=2, sticky="ew")
+
+    Label(filter_frame, text="Timesheet Owner:").grid(row=2, column=0, padx=5, pady=2, sticky="w")
+    app.owner_filter_combo = Combobox(filter_frame, values=["All"], state="readonly", width=25)
+    app.owner_filter_combo.set("All")
+    app.owner_filter_combo.grid(row=2, column=1, padx=5, pady=2, sticky="ew")
+
+    Label(filter_frame, text="Timesheet Action:").grid(row=2, column=2, padx=5, pady=2, sticky="w")
+    app.timesheet_action_filter_combo = Combobox(filter_frame, values=["All"], state="readonly", width=25)
+    app.timesheet_action_filter_combo.set("All")
+    app.timesheet_action_filter_combo.grid(row=2, column=3, padx=5, pady=2, sticky="ew")
+
 
     # Apply Filters Button
-    Button(filter_frame, text="Apply Filters", command= lambda: apply_filters(app)).grid(row=2, column=0, columnspan=4, pady=5)
+    Button(filter_frame, text="Apply Filters", command=lambda: apply_filters(app)).grid(row=3, column=0, columnspan=4, pady=5)
     filter_frame.columnconfigure(1, weight=1)
     filter_frame.columnconfigure(3, weight=1)
 

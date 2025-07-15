@@ -50,11 +50,11 @@ def process_data(app):
     try:
         # Process timesheets (assuming files were already selected and app.timesheet_file_paths is set)
         if hasattr(app, 'timesheet_file_paths') and app.timesheet_file_paths:
-            processed_hours, errors = _process_timesheet_files(app.timesheet_file_paths)
+            task_entries, errors = _process_timesheet_files(app.timesheet_file_paths)
         else:
-            processed_hours, errors = {}, {}
+            task_entries, errors = {}, {}
 
-        app.task_hours_processed = processed_hours
+        app.task_entries = task_entries
         app.time_sheet_errors = errors
 
         # Update UI on the main thread
