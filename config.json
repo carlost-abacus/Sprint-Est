@@ -1,5 +1,7 @@
 {
   "gitlab_url": "https://gitlab.com",
   "private_token": "glpat-g4kkbP-HyTGiA7wMX-c-",
-  "project_id": "35721152"
+  "project_id": "35721152",
+  "sender_email": "carlost@abacus.tw",
+  "app_password": "iocixcpwdkmhyxmm"
 }

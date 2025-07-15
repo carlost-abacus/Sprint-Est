@@ -24,6 +24,9 @@ class GitLabReportApp:
         self.private_token = tk.StringVar(value=config.get("private_token", ""))
         self.project_id = tk.StringVar(value=str(config.get("project_id", "")))
 
+        self.app_password = str(config.get("app_password", ""))
+        self.sender_email = str(config.get("sender_email", ""))
+
         self.start_date_str_gitlab = tk.StringVar()
         self.end_date_str_gitlab = tk.StringVar()
 

@@ -1,9 +1,10 @@
-from tkinter import LabelFrame, Label, Button, Frame, Scrollbar, Toplevel, Text
-from tkinter import RIGHT, Y, BOTH, VERTICAL, LEFT, WORD, END, DISABLED
+from tkinter import LabelFrame, Label, Button, Frame, Scrollbar, Toplevel, Text, StringVar, Entry, Checkbutton, BooleanVar
+from tkinter import RIGHT, Y, BOTH, VERTICAL, LEFT, WORD, END, DISABLED, X
 from tkinter.ttk import Combobox, Treeview
-from utils.export_util import export_to_excel, export_to_csv    
+from utils.export_util import export_to_excel, export_to_csv, send_email
 from services.timesheet_processor import apply_filters
 from tkinter import messagebox
+
 
 
 def setup_report_ui(app):
@@ -86,43 +87,74 @@ def setup_report_ui(app):
 
     Button(button_frame, text="Export to Excel", command=export_to_excel).pack(side=LEFT, padx=5)
     Button(button_frame, text="Export to CSV", command=export_to_csv).pack(side=LEFT, padx=5)
-    Button(button_frame, text="Show Error Report", command=lambda: show_error_report(app)).pack(side=LEFT, padx=5)
+    Button(button_frame, text="Show Error Report", command=lambda: open_error_email_ui(app)).pack(side=LEFT, padx=5)
 
+def open_error_email_ui(app):
+    error_window = Toplevel(app.master)
+    error_window.title("Send Time Sheet Error Reports")
+    error_window.geometry("500x500")
+    error_window.transient(app.master)
+    error_window.grab_set()
 
-def show_error_report(app):
-    if not app.time_sheet_errors:
-        messagebox.showinfo("Error Report", "No time sheet errors found from the last data fetch.")
-        return
+    Label(error_window, text="Owner", font=("Arial", 10, "bold")).grid(row=0, column=0, padx=5)
+    Label(error_window, text="Email Address", font=("Arial", 10, "bold")).grid(row=0, column=1, padx=5)
+    Label(error_window, text="# Errors", font=("Arial", 10, "bold")).grid(row=0, column=2, padx=5)
+    Label(error_window, text="Preview", font=("Arial", 10, "bold")).grid(row=0, column=3, padx=5)
+    Label(error_window, text="Send?", font=("Arial", 10, "bold")).grid(row=0, column=4, padx=5)
 
-    error_report_window = Toplevel(app.master)
-    error_report_window.title("Time Sheet Error Report")
-    error_report_window.geometry("700x500")
-    error_report_window.transient(app.master) # Make it appear on top of main window
-    error_report_window.grab_set() # Make it modal
+    # Keep references to entries and checkboxes
+    owner_email_entries = {}
+    send_flags = {}
 
-    text_area = Text(error_report_window, wrap=WORD, font=("Arial", 10))
-    text_area.pack(expand=True, fill=BOTH, padx=10, pady=10)
+    for idx, (owner, errors) in enumerate(app.time_sheet_errors.items(), start=1):
+        Label(error_window, text=owner).grid(row=idx, column=0, sticky="w", padx=5)
 
-    report_content = "Time Sheet Processing Errors:\n\n"
-    if not app.time_sheet_errors:
-        report_content += "No errors to report."
-    else:
+        email_var = StringVar()
+        Entry(error_window, textvariable=email_var, width=35).grid(row=idx, column=1, padx=5)
+        owner_email_entries[owner] = email_var
+
+        Label(error_window, text=str(len(errors))).grid(row=idx, column=2)
+
+        Button(
+            error_window,
+            text="Preview",
+            command=lambda o=owner: preview_owner_errors(o, app, error_window)
+        ).grid(row=idx, column=3, padx=5)
+
+        send_var = BooleanVar(value=True)
+        Checkbutton(error_window, variable=send_var).grid(row=idx, column=4)
+        send_flags[owner] = send_var
+
+    def send_reports():
         for owner, errors in app.time_sheet_errors.items():
-            report_content += f"--- Owner/File: {owner if owner else 'Unknown'} ---\n"
-            for error in errors:
-                report_content += f"- {error}\n"
-            report_content += "\n"
-    text_area.insert(END, report_content)
-    text_area.config(state=DISABLED)
+            if send_flags[owner].get():
+                email = owner_email_entries[owner].get().strip()
+                if not email:
+                    messagebox.showwarning("Missing Email", f"Email for '{owner}' is missing.")
+                    continue
+                try:
+                    send_email(app, owner, email, errors)
+                except Exception as e:
+                    messagebox.showerror("Send Failed", f"Failed to send to {email}.\nError: {e}")
+        messagebox.showinfo("Done", "Emails sent (or attempted) for all selected owners.")
 
-    def copy_to_clipboard():
-        error_report_window.clipboard_clear()
-        error_report_window.clipboard_append(report_content)
-        messagebox.showinfo("Copied", "Error report copied to clipboard.")
+    Button(error_window, text="Send Emails", command=send_reports).grid(row=idx + 1, column=0, columnspan=5, pady=10)
 
-    copy_btn = Button(error_report_window, text="Copy to Clipboard", command=copy_to_clipboard)
-    copy_btn.pack(pady=5)
 
-    # Allow user to close
-    close_btn = Button(error_report_window, text="Close", command=error_report_window.destroy)
-    close_btn.pack(pady=5)
+def preview_owner_errors(owner, app, parent_window=None):
+    preview_win = Toplevel(parent_window or app.master)
+    preview_win.title(f"Errors for {owner}")
+    preview_win.geometry("1000x400")
+    preview_win.transient(parent_window or app.master)  # Set window parent
+    preview_win.grab_set()  # Makes this preview window modal relative to parent
+
+    text = Text(preview_win, wrap=WORD)
+    text.pack(expand=True, fill=BOTH, padx=10, pady=10)
+    errors = app.time_sheet_errors.get(owner, [])
+    text.insert(END, f"Error Report for {owner}:\n\n")
+    for line in errors:
+        text.insert(END, f"- {line}\n")
+    text.config(state=DISABLED)
+
+    # Optional: Close button
+    Button(preview_win, text="Close", command=preview_win.destroy).pack(pady=5)

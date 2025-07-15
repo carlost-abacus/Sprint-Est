@@ -1,6 +1,8 @@
 import pandas as pd
 from tkinter import filedialog, messagebox
 import xlsxwriter
+import smtplib
+from email.message import EmailMessage
 
 def export_to_excel(app):
     try:
@@ -79,3 +81,34 @@ def export_to_csv(app):
 
     except Exception as e:
         messagebox.showerror("Export Error", f"An error occurred while exporting: {str(e)}")
+
+
+
+def send_email(app, owner, to_email, error_lines):
+    msg = EmailMessage()
+    msg['Subject'] = f"Time Sheet Error Report for {owner}"
+    msg['From'] = "carlost@abacus.tw"
+    msg['To'] = to_email
+
+    msg.set_content(f"""Dear {owner},
+
+    The following issues were found in your time sheet:
+
+    {chr(10).join(f"- {err}" for err in error_lines)}
+
+    Please correct them and resubmit.
+
+    Best regards,
+    Sprint Tool Bot
+    """)
+
+    # Gmail SMTP setup
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    sender_email = app.sender_email  # Use the sender email from config
+    app_password = app.app_password  # Use the app password from config
+
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(sender_email, app_password)
+        server.send_message(msg)
