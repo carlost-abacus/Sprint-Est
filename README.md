@@ -1,93 +1,309 @@
-# sprint-tracker
+<div id="top">
+
+<!-- HEADER STYLE: CLASSIC -->
+<div align="center">
+
+<img src="readmeai/assets/logos/purple.svg" width="30%" style="position: relative; top: 0; right: 0;" alt="Project Logo"/>
+
+# SPRINT-EST
+
+<em></em>
+
+<!-- BADGES -->
+<!-- local repository, no metadata badges. -->
+
+<em>Built with the tools and technologies:</em>
+
+<img src="https://img.shields.io/badge/JSON-000000.svg?style=default&logo=JSON&logoColor=white" alt="JSON">
+<img src="https://img.shields.io/badge/Python-3776AB.svg?style=default&logo=Python&logoColor=white" alt="Python">
+
+</div>
+<br>
+
+---
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Overview](#overview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+    - [Project Index](#project-index)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Testing](#testing)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+---
+
+## Overview
 
 
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Features
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<code>❯ REPLACE-ME</code>
 
-## Add your files
+---
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Project Structure
 
+```sh
+└── Sprint-Est/
+    ├── __pycache__
+    │   └── app_config.cpython-313.pyc
+    ├── app_config.py
+    ├── assets
+    │   ├── abacus_icon.ico
+    │   └── abacus_icon.png
+    ├── config.json
+    ├── gui
+    │   ├── __pycache__
+    │   ├── config_tab.py
+    │   ├── loading_window.py
+    │   ├── main_app.py
+    │   └── report_tab.py
+    ├── main.py
+    ├── README.md
+    ├── services
+    │   ├── __pycache__
+    │   ├── gitlab_service.py
+    │   └── timesheet_processor.py
+    └── utils
+        ├── __pycache__
+        └── export_util.py
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/abacus.tw/sprint-tracker.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
+### Project Index
 
-- [ ] [Set up project integrations](https://gitlab.com/abacus.tw/sprint-tracker/-/settings/integrations)
+<details open>
+    <summary><b><code>C:\GITHUB\SPRINT-EST/</code></b></summary>
+    <!-- __root__ Submodule -->
+    <details>
+        <summary><b>__root__</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ __root__</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/app_config.py'>app_config.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/config.json'>config.json</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/main.py'>main.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+            </table>
+        </blockquote>
+    </details>
+    <!-- gui Submodule -->
+    <details>
+        <summary><b>gui</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ gui</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/gui\config_tab.py'>config_tab.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/gui\loading_window.py'>loading_window.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/gui\main_app.py'>main_app.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/gui\report_tab.py'>report_tab.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+            </table>
+        </blockquote>
+    </details>
+    <!-- services Submodule -->
+    <details>
+        <summary><b>services</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ services</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/services\gitlab_service.py'>gitlab_service.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/services\timesheet_processor.py'>timesheet_processor.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+            </table>
+        </blockquote>
+    </details>
+    <!-- utils Submodule -->
+    <details>
+        <summary><b>utils</b></summary>
+        <blockquote>
+            <div class='directory-path' style='padding: 8px 0; color: #666;'>
+                <code><b>⦿ utils</b></code>
+            <table style='width: 100%; border-collapse: collapse;'>
+            <thead>
+                <tr style='background-color: #f8f9fa;'>
+                    <th style='width: 30%; text-align: left; padding: 8px;'>File Name</th>
+                    <th style='text-align: left; padding: 8px;'>Summary</th>
+                </tr>
+            </thead>
+                <tr style='border-bottom: 1px solid #eee;'>
+                    <td style='padding: 8px;'><b><a href='C:\GitHub\Sprint-Est/blob/master/utils\export_util.py'>export_util.py</a></b></td>
+                    <td style='padding: 8px;'>Code>❯ REPLACE-ME</code></td>
+                </tr>
+            </table>
+        </blockquote>
+    </details>
+</details>
 
-## Collaborate with your team
+---
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## Getting Started
 
-## Test and Deploy
+### Prerequisites
 
-Use the built-in continuous integration in GitLab.
+This project requires the following dependencies:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- **Programming Language:** Python
 
-***
+### Installation
 
-# Editing this README
+Build Sprint-Est from the source and intsall dependencies:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+1. **Clone the repository:**
 
-## Suggestions for a good README
+    ```sh
+    ❯ git clone ../Sprint-Est
+    ```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+2. **Navigate to the project directory:**
 
-## Name
-Choose a self-explaining name for your project.
+    ```sh
+    ❯ cd Sprint-Est
+    ```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+3. **Install the dependencies:**
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+echo 'INSERT-INSTALL-COMMAND-HERE'
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Usage
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Run the project with:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+echo 'INSERT-RUN-COMMAND-HERE'
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Testing
+
+Sprint-est uses the {__test_framework__} test framework. Run the test suite with:
+
+echo 'INSERT-TEST-COMMAND-HERE'
+
+---
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+
+- [X] **`Task 1`**: <strike>Implement feature one.</strike>
+- [ ] **`Task 2`**: Implement feature two.
+- [ ] **`Task 3`**: Implement feature three.
+
+---
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- **💬 [Join the Discussions](https://LOCAL/GitHub/Sprint-Est/discussions)**: Share your insights, provide feedback, or ask questions.
+- **🐛 [Report Issues](https://LOCAL/GitHub/Sprint-Est/issues)**: Submit bugs found or log feature requests for the `Sprint-Est` project.
+- **💡 [Submit Pull Requests](https://LOCAL/GitHub/Sprint-Est/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+<details closed>
+<summary>Contributing Guidelines</summary>
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+1. **Fork the Repository**: Start by forking the project repository to your LOCAL account.
+2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
+   ```sh
+   git clone C:\GitHub\Sprint-Est
+   ```
+3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
+   ```sh
+   git checkout -b new-feature-x
+   ```
+4. **Make Your Changes**: Develop and test your changes locally.
+5. **Commit Your Changes**: Commit with a clear message describing your updates.
+   ```sh
+   git commit -m 'Implemented new feature x.'
+   ```
+6. **Push to LOCAL**: Push the changes to your forked repository.
+   ```sh
+   git push origin new-feature-x
+   ```
+7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
+8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
+</details>
+
+<details closed>
+<summary>Contributor Graph</summary>
+<br>
+<p align="left">
+   <a href="https://LOCAL{/GitHub/Sprint-Est/}graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=GitHub/Sprint-Est">
+   </a>
+</p>
+</details>
+
+---
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Sprint-est is protected under the [LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+
+---
+
+## Acknowledgments
+
+- Credit `contributors`, `inspiration`, `references`, etc.
+
+<div align="right">
+
+[![][back-to-top]](#top)
+
+</div>
+
+
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+
+
+---
