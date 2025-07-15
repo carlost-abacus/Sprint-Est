@@ -1,7 +1,8 @@
 import tkinter as tk
+import os
 from tkinter import PhotoImage, messagebox
 from tkinter.ttk import Notebook
-from app_config import resource_path, load_config
+from app_config import get_executable_dir, load_config
 from gui.config_tab import setup_config_ui
 from gui.report_tab import setup_report_ui
 
@@ -13,7 +14,8 @@ class GitLabReportApp:
         master.resizable(True, True)
 
         try:
-            photo = PhotoImage(file=resource_path("assets/abacus_icon.png"))
+            photo_path = os.path.join(get_executable_dir(), "assets", "abacus_icon.png")
+            photo = PhotoImage(file=photo_path)
             master.iconphoto(True, photo)
         except Exception:
             pass

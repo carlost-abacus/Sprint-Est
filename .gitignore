@@ -1,3 +1,7 @@
 /abacus_icon.ico
 __pycache__/
 *.pyc
+build/
+dist/
+main.exe
+main.spec
